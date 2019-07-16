@@ -3,6 +3,7 @@ import { ThemoviedbService } from '../../services/themoviedb.service';
 import { Subscriber } from 'rxjs';
 import { PeliculaDetalle, Cast } from '../../interfaces/interfaces';
 import { ModalController } from '@ionic/angular';
+import { DataLocalService } from '../../services/data-local.service';
 
 @Component({
   selector: 'app-detalle',
@@ -23,7 +24,8 @@ export class DetalleComponent implements OnInit {
   };
 
   constructor( private theMovieService: ThemoviedbService,
-               private modalCtrl: ModalController ) { }
+               private modalCtrl: ModalController,
+               private dataLocal: DataLocalService ) { }
 
   ngOnInit() {
     console.log('ID', this.id);
@@ -44,6 +46,6 @@ export class DetalleComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
   favorito() {
-    console.log('Favorito...');
+    this.dataLocal.guardarPelicula( this.peliculaDetalle );
   }
 }
