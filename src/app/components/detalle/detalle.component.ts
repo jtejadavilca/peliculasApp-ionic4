@@ -16,6 +16,7 @@ export class DetalleComponent implements OnInit {
   peliculaDetalle: PeliculaDetalle = {};
   actores: Cast[] = [];
   oculto = 150;
+  iconOutlineNoExiste: string;
 
   slideOptActores = {
     slidesPerView: 3.3,
@@ -25,10 +26,15 @@ export class DetalleComponent implements OnInit {
 
   constructor( private theMovieService: ThemoviedbService,
                private modalCtrl: ModalController,
-               private dataLocal: DataLocalService ) { }
+               private dataLocal: DataLocalService ) {
+               }
 
-  ngOnInit() {
-    console.log('ID', this.id);
+  async ngOnInit() {
+
+    const existe = await this.dataLocal.existePelicula( this.id );
+    console.log('existe', existe);
+    this.peliculaExisteEnFavoritos(existe);
+
     this.theMovieService.getPeliculaDetalle(this.id)
     .subscribe( resp => {
       console.log('resp', resp);
@@ -46,6 +52,12 @@ export class DetalleComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
   favorito() {
-    this.dataLocal.guardarPelicula( this.peliculaDetalle );
+    console.log('this.dataLocal', this.dataLocal);
+
+    this.peliculaExisteEnFavoritos(this.dataLocal.guardarPelicula( this.peliculaDetalle ));
+
+  }
+  peliculaExisteEnFavoritos( existe: boolean ) {
+    this.iconOutlineNoExiste = !existe ? '-outline' : '';
   }
 }

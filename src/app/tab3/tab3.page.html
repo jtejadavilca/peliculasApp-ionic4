@@ -1,9 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Three
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <h3>Favoritos</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-<ion-content></ion-content>
+  
+
+  <div *ngFor="let genero of generos">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col>
+          <h3>{{genero.name}}</h3>
+          <app-slideshow-poster [peliculas]="peliculas"></app-slideshow-poster>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
